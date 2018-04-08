@@ -41,7 +41,7 @@ board.on("ready", function() {
                 ts.write({
                     where: 'delta',
                     type : 'door',
-                    response: 'tryAgain'
+                    response: 'now openning'
                 });
             }
 
