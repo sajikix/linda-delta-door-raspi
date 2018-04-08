@@ -12,13 +12,14 @@ const board = new five.Board({
 board.on("ready", function() {
     const servo = new five.Servo({
         pin: 'GPIO18',
+        startAt: 0
     });
-    const animation = new five.Animation(servo);
-    animation.enqueue({
-        cuePoints: [0, 0.25, 0.5, 0.75, 1.0],
-        keyFrames: [{degrees: 0},{degrees: 180},{degrees: 180},{degrees:0}],
-        duration: 5000
-    });
+    // const animation = new five.Animation(servo);
+    // animation.enqueue({
+    //     cuePoints: [0, 0.25, 0.5, 0.75, 1.0],
+    //     keyFrames: [{degrees: 0},{degrees: 180},{degrees: 180},{degrees:0}],
+    //     duration: 5000
+    // });
 
     linda.io.on('connect', function(){
         console.log('connect!!!');
