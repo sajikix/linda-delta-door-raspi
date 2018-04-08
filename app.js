@@ -14,13 +14,6 @@ board.on("ready", function() {
         pin: 'GPIO18',
         startAt: 0
     });
-    // const animation = new five.Animation(servo);
-    // animation.enqueue({
-    //     cuePoints: [0, 0.25, 0.5, 0.75, 1.0],
-    //     keyFrames: [{degrees: 0},{degrees: 180},{degrees: 180},{degrees:0}],
-    //     duration: 5000
-    // });
-
     linda.io.on('connect', function(){
         console.log('connect!!!');
         let last_at = Date.now();
@@ -32,9 +25,9 @@ board.on("ready", function() {
         }, function(err, tuple){
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
             if(last_at + 5000 < Date.now()){
-                servo.to(120);
-                board.wait(1000,function () {
-                    servo.to(0);
+                servo.to(120,1000);
+                board.wait(4000,function () {
+                    servo.to(0,1000);
                     ts.write({
                         where: 'delta',
                         type: 'door',
