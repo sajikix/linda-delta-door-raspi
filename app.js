@@ -14,6 +14,11 @@ board.on("ready", function() {
         pin: 'GPIO18',
     });
     const animation = new five.Animation(servo);
+    animation.enqueue({
+        cuePoints: [0, 0.25, 0.5, 0.75, 1.0],
+        keyFrames: [{degrees: 0},{degrees: 180},{degrees: 180},{degrees:0}],
+        duration: 5000
+    });
 
     linda.io.on('connect', function(){
         console.log('connect!!!');
@@ -26,11 +31,7 @@ board.on("ready", function() {
         }, function(err, tuple){
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
             if(last_at + 5000 < Date.now()){
-                animation.enqueue({
-                    cuePoints: [0, 0.25, 0.5, 0.75, 1.0],
-                    keyFrames: [{degrees: 0},{degrees: 180},{degrees: 180},{degrees:0}],
-                    duration: 5000
-                });
+                animation.play();
                 ts.write({
                     where: 'delta',
                     name: 'light',
