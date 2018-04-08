@@ -27,16 +27,17 @@ board.on("ready", function() {
         }, function(err, tuple){
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
             if(last_at + 8000 < Date.now()){
+                ts.write({
+                    where: 'delta',
+                    type: 'door',
+                    cmd: 'open',
+                    response: 'success'
+                });
                 last_at = Date.now();
                 servo.to(270,800);
                 //servo.sweep([0, 270]);
                 board.wait(2000,function () {
                     servo.to(0,800);
-                    ts.write({
-                        where: 'delta',
-                        type: 'door',
-                        response: 'success'
-                    });
                 })
             }else{
                 ts.write({
