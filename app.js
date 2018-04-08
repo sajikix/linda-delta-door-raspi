@@ -31,13 +31,15 @@ board.on("ready", function() {
         }, function(err, tuple){
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
             if(last_at + 5000 < Date.now()){
-                animation.play();
-                ts.write({
-                    where: 'delta',
-                    name: 'light',
-                    response: 'success',
-                    cmd: 'on'
-                });
+                servo.to(120);
+                board.wait(1000,function () {
+                    servo.to(0);
+                    ts.write({
+                        where: 'delta',
+                        type: 'door',
+                        response: 'success'
+                    });
+                })
             }else{
 
             }
