@@ -26,7 +26,7 @@ board.on("ready", function() {
 
         ts.watch({
             where: "delta",
-            name: "door",
+            type: "door",
             cmd: "open"
         }, function(err, tuple){
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
