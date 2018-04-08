@@ -26,9 +26,10 @@ board.on("ready", function() {
             cmd: "open"
         }, function(err, tuple){
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
-            if(last_at + 5000 < Date.now()){
+            if(last_at + 8000 < Date.now()){
                 servo.to(270,800);
                 board.wait(2000,function () {
+                    last_at = Date.now();
                     servo.to(0,800);
                     ts.write({
                         where: 'delta',
