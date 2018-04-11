@@ -41,15 +41,12 @@ board.on("ready", () => {
                 ts.write(responseTuple);
             } else if (last_at + 5000 < Date.now()) {
                 last_at = Date.now();
+                responseTuple.response = 'success';
                 console.log('> response=' + JSON.stringify(responseTuple));
                 moveServo(() => {
                     ts.write(responseTuple);
                 });
             }
-            // } else {
-            //     responseTuple.response = 'now-openning'
-            //     ts.write(responseTuple);
-            // }
         });
 
     });
