@@ -37,15 +37,12 @@ board.on("ready", function () {
             if (last_at + 5000 < Date.now()) {
                 last_at = Date.now();
 
+                moveServo();
+
                 ts.write({
                     type: 'door',
                     where: 'delta',
                     response: 'success'
-                }, () => {
-                    servo.to(270, 800);
-                    board.wait(2000, function () {
-                        servo.to(0, 800);
-                    });
                 });
 
             } else {
