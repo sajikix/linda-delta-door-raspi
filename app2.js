@@ -36,12 +36,14 @@ board.on("ready", function () {
         }, function (err, tuple) {
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
             //console.log(tuple.data.toString());
-            for(let t in tuple.data){
+            let responseTuple = tuple.data;
+            responseTuple.response = 'success';
+            for(let t in responseTuple){
                 console.log(t);
             }
             if (last_at + 5000 < Date.now()) {
                 last_at = Date.now();
-                let responseTuple = {type:'door',where:'delta',response:'success'};
+                // let responseTuple = {type:'door',where:'delta',response:'success'};
                 console.log(responseTuple);
 
                 moveServo(()=>{
