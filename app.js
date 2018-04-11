@@ -32,6 +32,7 @@ board.on("ready", function() {
                 ts.write({
                     type: 'door',
                     cmd: 'open',
+                    where: 'delta',
                     response: 'success'
                 });
                 last_at = Date.now();
