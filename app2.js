@@ -22,7 +22,7 @@ board.on("ready", function () {
     linda.io.on('connect', function () {
         console.log('connect!!!');
         let last_at = Date.now();
-        const moveServo = () => {
+        let moveServo = () => {
             servo.to(270, 800);
             board.wait(2000, function () {
                 servo.to(0, 800);
@@ -41,8 +41,13 @@ board.on("ready", function () {
                     type: 'door',
                     where: 'delta',
                     response: 'success'
+                }, () => {
+                    servo.to(270, 800);
+                    board.wait(2000, function () {
+                        servo.to(0, 800);
+                    });
                 });
-                moveServo();
+
             } else {
                 ts.write({
                     where: 'delta',
