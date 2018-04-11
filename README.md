@@ -1,5 +1,5 @@
 # linda-delta-door-raspi
-lindaサーバのタプルを監視し、それに合わせてドアのサーボをコントロールするプログラム。
+lindaサーバのタプルを監視し、それに合わせてdeltaのドアのサーボをコントロールするプログラム。
 
 # 起動
 `$ npm install`
@@ -8,8 +8,9 @@ lindaサーバのタプルを監視し、それに合わせてドアのサーボ
 
 # 機材
 - Raspberry Pi 3
-- HS-322HD
+- HS-322HD (サーボモーター)
 
 
 # 注意
-raspi-ioはraspi上以外でインストールしようとするとエラーが出ます
+`raspi-io`はRaspberry Pi上でしかインストールできません。<br>
+(その他の環境で`npm install`するとエラーになります)
