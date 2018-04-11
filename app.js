@@ -10,52 +10,6 @@ const board = new five.Board({
     repl: false
 });
 
-// function watch() {
-//     board.on("ready", function() {
-//         const servo = new five.Servo({
-//             pin: 'GPIO18',
-//             startAt:0,
-//             invert: true,
-//             range: [0,360],
-//             pwmRange:[500,2400]
-//         });
-//         linda.io.on('connect', function(){
-//             console.log('connect!!!');
-//             let last_at = Date.now();
-//             ts.watch({
-//                 where: "delta",
-//                 type: "door",
-//                 cmd: "open"
-//             }, function(err, tuple){
-//                 console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
-//                 if(last_at + 8000 < Date.now()){
-//                     ts.write({
-//                         type: 'door',
-//                         cmd: 'open',
-//                         response: 'success'
-//                     });
-//                     last_at = Date.now();
-//                     servo.to(270,800);
-//                     //servo.sweep([0, 270]);
-//                     board.wait(2000,function () {
-//                         servo.to(0,800);
-//                     })
-//                 }else{
-//                     ts.write({
-//                         where: 'delta',
-//                         type : 'door',
-//                         response: 'now-openning'
-//                     });
-//                 }
-//
-//             });
-//
-//         });
-//     });
-// }
-
-
-//exports.watch = watch;
 
 board.on("ready", function() {
     const servo = new five.Servo({
@@ -74,7 +28,7 @@ board.on("ready", function() {
             cmd: "open"
         }, function(err, tuple){
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
-            if(last_at + 8000 < Date.now()){
+            if(last_at + 5000 < Date.now()){
                 ts.write({
                     type: 'door',
                     cmd: 'open',
