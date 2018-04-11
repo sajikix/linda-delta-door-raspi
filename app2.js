@@ -38,6 +38,7 @@ board.on("ready", function () {
             if (last_at + 5000 < Date.now()) {
                 last_at = Date.now();
                 let responseTuple = {type:'door',where:'delta',response:'success'};
+                console.log(responseTuple);
 
                 moveServo(()=>{
                     // ts.write({
