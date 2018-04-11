@@ -22,10 +22,11 @@ board.on("ready", function () {
     linda.io.on('connect', function () {
         console.log('connect!!!');
         let last_at = Date.now();
-        let moveServo = () => {
+        let moveServo = (callback) => {
             servo.to(270, 800);
             board.wait(2000, function () {
                 servo.to(0, 800);
+                callback();
             });
         }
         ts.watch({
@@ -37,12 +38,12 @@ board.on("ready", function () {
             if (last_at + 5000 < Date.now()) {
                 last_at = Date.now();
 
-                moveServo();
-
-                ts.write({
-                    type: 'door',
-                    where: 'delta',
-                    response: 'success'
+                moveServo(()=>{
+                    ts.write({
+                        type: 'door',
+                        where: 'delta',
+                        response: 'success'
+                    });
                 });
 
             } else {
