@@ -33,6 +33,7 @@ board.on("ready", function() {
                 servo.to(270,800);
                 board.wait(2000,function () {
                     servo.to(0,800);
+                    console.log('opned');
                     ts.write({
                         type: 'door',
                         where: 'delta',
