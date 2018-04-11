@@ -41,10 +41,8 @@ board.on("ready", function () {
                     type: 'door',
                     where: 'delta',
                     response: 'success'
-                },()=>{
-                    console.log('opned');
-                    //moveServo();
                 });
+                moveServo();
             } else {
                 ts.write({
                     where: 'delta',
