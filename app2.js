@@ -36,7 +36,7 @@ board.on("ready", function () {
         }, function (err, tuple) {
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
             //console.log(tuple.data.toString());
-            for(let t in tuple){
+            for(let t in tuple.data){
                 console.log(t);
             }
             if (last_at + 5000 < Date.now()) {
