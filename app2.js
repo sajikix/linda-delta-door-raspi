@@ -11,7 +11,7 @@ const board = new five.Board({
 });
 
 
-board.on("ready", function () {
+board.on("ready", () => {
     const servo = new five.Servo({
         pin: 'GPIO18',
         startAt: 0,
@@ -19,12 +19,12 @@ board.on("ready", function () {
         range: [0, 360],
         pwmRange: [500, 2400]
     });
-    linda.io.on('connect', function () {
+    linda.io.on('connect', () => {
         console.log('connect!!!');
         let last_at = Date.now();
         let moveServo = (callback) => {
             servo.to(270, 800);
-            board.wait(2000, function () {
+            board.wait(2000, () => {
                 servo.to(0, 800);
                 callback();
             });
@@ -33,24 +33,22 @@ board.on("ready", function () {
             where: "delta",
             type: "door",
             cmd: "open"
-        }, function (err, tuple) {
+        }, (err, tuple) => {
             console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
             let responseTuple = tuple.data;
-            responseTuple.response = 'success';
-            if (last_at + 5000 < Date.now()) {
+            if (err) {
+                responseTuple.response = 'error'
+                ts.write(responseTuple);
+            } else if (last_at + 5000 < Date.now()) {
                 last_at = Date.now();
-                console.log(responseTuple);
-                moveServo(()=>{
+                console.log('> response=' + responseTuple);
+                moveServo(() => {
                     ts.write(responseTuple);
                 });
             } else {
-                ts.write({
-                    where: 'delta',
-                    type: 'door',
-                    response: 'now-openning'
-                });
+                responseTuple.response = 'now-openning'
+                ts.write(responseTuple);
             }
-
         });
 
     });
