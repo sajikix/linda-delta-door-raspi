@@ -37,13 +37,15 @@ board.on("ready", function () {
             console.log("> " + tuple.data.message + " (from:" + tuple.from + ")");
             if (last_at + 5000 < Date.now()) {
                 last_at = Date.now();
+                let responseTuple = {type:'door',where:'delta',response:'success'};
 
                 moveServo(()=>{
-                    ts.write({
-                        type: 'door',
-                        where: 'delta',
-                        response: 'success'
-                    });
+                    // ts.write({
+                    //     type: 'door',
+                    //     where: 'delta',
+                    //     response: 'success'
+                    // });
+                    ts.write(responseTuple);
                 });
 
             } else {
