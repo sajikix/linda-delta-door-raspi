@@ -35,7 +35,6 @@ board.on("ready", function() {
                     servo.to(0,800);
                     ts.write({
                         type: 'door',
-                        cmd: 'open',
                         where: 'delta',
                         response: 'success'
                     });
