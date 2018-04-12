@@ -7,7 +7,7 @@ const five = require("johnny-five");
 const Raspi = require("raspi-io");
 const board = new five.Board({
     io: new Raspi(),
-    repl: false
+    repl: false     //デーモン化の都合上
 });
 
 
@@ -19,9 +19,11 @@ board.on("ready", () => {
         range: [0, 360],
         pwmRange: [500, 2400]
     });
+
     linda.io.on('connect', () => {
         console.log('connect!!!');
         let last_at = Date.now();
+
         let moveServo = (callback) => {
             servo.to(270, 800);
             board.wait(2000, () => {
@@ -29,6 +31,7 @@ board.on("ready", () => {
                 callback();
             });
         }
+        
         ts.watch({
             where: "delta",
             type: "door",
