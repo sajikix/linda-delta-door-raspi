@@ -11,8 +11,41 @@ const board = new five.Board({
 });
 
 
+let isOn = false;
+let responseTuple;
+let servo;
+let moveServo;
+
+linda.io.on('connect', () => {
+    console.log('linda-connect!!!');
+    let last_at = Date.now();
+
+    ts.watch({
+        where: "delta",
+        type: "door",
+        cmd: "test"
+    }, (err, tuple) => {
+        console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
+        responseTuple = tuple.data;
+        if (err) {
+            responseTuple.response = 'error'
+            ts.write(responseTuple);
+        } else if (last_at + 5000 < Date.now()) {
+            last_at = Date.now();
+            responseTuple.response = 'success_test';    //最後戻す
+            console.log('> response=' + JSON.stringify(responseTuple));
+            isOn = true;
+            moveServo();
+
+        }
+    });
+
+});
+
+
 board.on("ready", () => {
-    const servo = new five.Servo({
+    console.log('board ok');
+    servo = new five.Servo({
         pin: 'GPIO18',
         startAt: 0,
         invert: true,
@@ -20,38 +53,12 @@ board.on("ready", () => {
         pwmRange: [500, 2400]
     });
 
-    linda.io.on('connect', () => {
-        console.log('connect!!!');
-        let last_at = Date.now();
-
-        let moveServo = (callback) => {
-            servo.to(270, 800);
-            board.wait(2000, () => {
-                servo.to(0, 800);
-                callback();
-            });
-        }
-        
-        ts.watch({
-            where: "delta",
-            type: "door",
-            cmd: "open"
-        }, (err, tuple) => {
-            console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
-            let responseTuple = tuple.data;
-            if (err) {
-                responseTuple.response = 'error'
-                ts.write(responseTuple);
-            } else if (last_at + 5000 < Date.now()) {
-                last_at = Date.now();
-                responseTuple.response = 'success';
-                console.log('> response=' + JSON.stringify(responseTuple));
-                moveServo(() => {
-                    ts.write(responseTuple);
-                });
-            }
+    moveServo = () => {
+        isOn = false;
+        servo.to(270, 800);
+        ts.write(responseTuple);
+        board.wait(2000, () => {
+            servo.to(0, 800);
         });
-
-    });
+    }
 });
-
