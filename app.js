@@ -74,6 +74,7 @@ board.on("ready", () => {
             servo.to(1,100);
             board.wait(100, () => {
                 servo.to(0, 100);
+                wake_at = Date.now();
             });
         }
     };
