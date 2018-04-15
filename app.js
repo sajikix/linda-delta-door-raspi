@@ -20,7 +20,7 @@ linda.io.on('connect', () => {
     ts.watch({
         where: "delta",
         type: "door",
-        cmd: "open"
+        cmd: "test"
     }, (err, tuple) => {
         console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
         responseTuple = tuple.data;
