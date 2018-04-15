@@ -10,6 +10,7 @@ const board = new five.Board({
     repl: false     //デーモン化の都合上
 });
 
+
 let isOn = false;
 let responseTuple;
 let servo;
@@ -34,7 +35,7 @@ linda.io.on('connect', () => {
             responseTuple.response = 'success_test';    //最後戻す
             console.log('> response=' + JSON.stringify(responseTuple));
             isOn = true;
-            moveServo(ts.write(responseTuple));
+            moveServo();
 
         }
     });
@@ -52,13 +53,13 @@ board.on("ready", () => {
         pwmRange: [500, 2400]
     });
 
-    moveServo = (callback) => {
+    moveServo = () => {
         console.log('moved');
         isOn = false;
         servo.to(270, 800);
         board.wait(2000, () => {
             servo.to(0, 800);
-            callback();
+            ts.write(responseTuple);
         });
     }
 });
