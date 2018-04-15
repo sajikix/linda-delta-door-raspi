@@ -7,9 +7,8 @@ const five = require("johnny-five");
 const Raspi = require("raspi-io");
 const board = new five.Board({
     io: new Raspi(),
-    repl: false     //デーモン化の都合上
+    repl: false
 });
-
 
 let responseTuple;
 let servo;
@@ -22,19 +21,23 @@ linda.io.on('connect', () => {
     ts.watch({
         where: "delta",
         type: "door",
-        cmd: "open"
+        cmd: "test"
     }, (err, tuple) => {
         console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
         responseTuple = tuple.data;
         if (err) {
             responseTuple.response = 'error';
             ts.write(responseTuple);
-        } else if (last_at + 5000 < Date.now()) {
-            last_at = Date.now();
-            responseTuple.response = 'success';
-            console.log('> response=' + JSON.stringify(responseTuple));
-            moveServo();
-
+        } else if (!('response' in tuple.data)) {
+            if(last_at + 5000 < Date.now()){
+                last_at = Date.now();
+                responseTuple.response = 'success_test';
+                console.log('> response=' + JSON.stringify(responseTuple));
+                moveServo();
+            }else{
+                responseTuple.response = 'already opened';
+                ts.write(responseTuple);
+            }
         }
     });
 
