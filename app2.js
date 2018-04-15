@@ -7,7 +7,7 @@ const five = require("johnny-five");
 const Raspi = require("raspi-io");
 const board = new five.Board({
     io: new Raspi(),
-    repl: false     //デーモン化の都合上
+    repl: false
 });
 
 
@@ -31,7 +31,7 @@ board.on("ready", () => {
                 callback();
             });
         }
-        
+
         ts.watch({
             where: "delta",
             type: "door",
