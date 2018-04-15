@@ -57,7 +57,11 @@ board.on("ready", () => {
         });
     }
 
-    if (isOn) moveServo();
+    if (isOn){
+        moveServo()
+    }else{
+        console.log('no cmd');
+    }
 });
 
 
