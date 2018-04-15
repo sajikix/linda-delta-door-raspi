@@ -17,7 +17,7 @@ let servo;
 let moveServo;
 
 linda.io.on('connect', () => {
-    console.log('connect!!!');
+    console.log('linda-connect!!!');
     let last_at = Date.now();
 
     ts.watch({
@@ -44,7 +44,7 @@ linda.io.on('connect', () => {
 
 
 board.on("ready", () => {
-    console.log('bord ok');
+    console.log('board ok');
     servo = new five.Servo({
         pin: 'GPIO18',
         startAt: 0,
@@ -54,12 +54,12 @@ board.on("ready", () => {
     });
 
     moveServo = () => {
-        console.log('moved');
+        //console.log('moved');
         isOn = false;
         servo.to(270, 800);
+        ts.write(responseTuple);
         board.wait(2000, () => {
             servo.to(0, 800);
-            ts.write(responseTuple);
         });
     }
 });
