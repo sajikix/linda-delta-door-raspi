@@ -65,16 +65,17 @@ board.on("ready", () => {
             servo.to(0, 800);
             isOpen = false;
         });
-    }
+    };
 
     const antiSleep = () => {
         if (!isOpen && Date.now()-wake_at > 60000){
+            console.log('wake up!');
             servo.to(1,100);
             board.wait(100, () => {
                 servo.to(0, 100);
             });
         }
-    }
+    };
 
     setInterval(antiSleep,10000);
 
