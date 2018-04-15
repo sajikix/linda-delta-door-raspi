@@ -27,7 +27,7 @@ linda.io.on('connect', () => {
     }, (err, tuple) => {
         console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
         responseTuple = tuple.data;
-        if (err || last_at + 5000 > Date.now()) {
+        if (err) {
             responseTuple.response = 'error'
             ts.write(responseTuple);
         } else if (last_at + 5000 < Date.now()) {
