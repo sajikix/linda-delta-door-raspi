@@ -32,9 +32,9 @@ linda.io.on('connect', () => {
             if(last_at + 7000 < Date.now()){
                 last_at = Date.now();
                 responseTuple.response = 'success_test';
+                ts.write(responseTuple);
                 console.log('> response=' + JSON.stringify(responseTuple));
                 moveServo();
-                ts.write(responseTuple);
             }else{
                 responseTuple.response = 'already opened';
                 ts.write(responseTuple);
