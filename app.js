@@ -13,6 +13,8 @@ const board = new five.Board({
 let responseTuple;
 let servo;
 let moveServo;
+let isOpen = false;
+let wake_at = Date.now();
 
 linda.io.on('connect', () => {
     console.log('linda-connect!!!');
@@ -29,13 +31,14 @@ linda.io.on('connect', () => {
             responseTuple.response = 'error';
             ts.write(responseTuple);
         } else if (!('response' in tuple.data)) {
-            if(last_at + 7000 < Date.now()){
-                last_at = Date.now();
+            if (last_at + 7000 < Date.now()) {
+                last_at = wake_at = Date.now();
+                isOpen = true;
                 responseTuple.response = 'success_test';
                 console.log('> response=' + JSON.stringify(responseTuple));
                 ts.write(responseTuple);
                 moveServo();
-            }else{
+            } else {
                 responseTuple.response = 'already opened';
                 ts.write(responseTuple);
             }
@@ -60,6 +63,22 @@ board.on("ready", () => {
         // ts.write(responseTuple);
         board.wait(2000, () => {
             servo.to(0, 800);
+            isOpen = false;
         });
-    }
+    };
+
+    const antiSleep = () => {
+        console.log('sleep check!')
+        if (!isOpen && Date.now() - wake_at > 100000) {
+            servo.to(1, 100);
+            board.wait(100, () => {
+                servo.to(0, 100);
+                console.log('wake up!');
+                wake_at = Date.now();
+            });
+        }
+    };
+
+    setInterval(antiSleep, 20000);
+
 });
