@@ -53,6 +53,7 @@ board.on("ready", () => {
     });
 
     moveServo = () => {
+        console.log('moved');
         isOn = false;
         servo.to(270, 800);
         board.wait(2000, () => {
