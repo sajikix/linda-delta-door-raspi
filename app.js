@@ -29,7 +29,7 @@ linda.io.on('connect', () => {
             ts.write(responseTuple);
         } else if (last_at + 5000 < Date.now()) {
             last_at = Date.now();
-            responseTuple.response = 'success';
+            responseTuple.response = 'success_test';    //最後戻す
             console.log('> response=' + JSON.stringify(responseTuple));
             isOn = true;
             ts.write(responseTuple);
@@ -48,7 +48,7 @@ board.on("ready", () => {
         pwmRange: [500, 2400]
     });
 
-    let moveServo = () => {
+    const moveServo = () => {
         isOn = false;
         servo.to(270, 800);
         board.wait(2000, () => {
