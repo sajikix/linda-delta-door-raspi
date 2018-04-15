@@ -69,11 +69,11 @@ board.on("ready", () => {
 
     const antiSleep = () => {
         console.log('sleep check!')
-        if (!isOpen && Date.now()-wake_at > 60000){
-            console.log('wake up!');
+        if (!isOpen && Date.now()-wake_at > 100000){
             servo.to(1,100);
             board.wait(100, () => {
                 servo.to(0, 100);
+                console.log('wake up!');
                 wake_at = Date.now();
             });
         }
