@@ -29,11 +29,12 @@ linda.io.on('connect', () => {
             responseTuple.response = 'error';
             ts.write(responseTuple);
         } else if (!('response' in tuple.data)) {
-            if(last_at + 5000 < Date.now()){
+            if(last_at + 7000 < Date.now()){
                 last_at = Date.now();
                 responseTuple.response = 'success_test';
                 console.log('> response=' + JSON.stringify(responseTuple));
                 moveServo();
+                ts.write(responseTuple);
             }else{
                 responseTuple.response = 'already opened';
                 ts.write(responseTuple);
@@ -56,7 +57,7 @@ board.on("ready", () => {
 
     moveServo = () => {
         servo.to(270, 800);
-        ts.write(responseTuple);
+        // ts.write(responseTuple);
         board.wait(2000, () => {
             servo.to(0, 800);
         });
