@@ -40,6 +40,7 @@ linda.io.on('connect', () => {
 
 
 board.on("ready", () => {
+    console.log('bord ok');
     const servo = new five.Servo({
         pin: 'GPIO18',
         startAt: 0,
