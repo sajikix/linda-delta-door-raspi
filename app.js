@@ -11,7 +11,6 @@ const board = new five.Board({
 });
 
 
-let isOn = false;
 let responseTuple;
 let servo;
 let moveServo;
@@ -23,18 +22,17 @@ linda.io.on('connect', () => {
     ts.watch({
         where: "delta",
         type: "door",
-        cmd: "test"
+        cmd: "open"
     }, (err, tuple) => {
         console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
         responseTuple = tuple.data;
         if (err) {
-            responseTuple.response = 'error'
+            responseTuple.response = 'error';
             ts.write(responseTuple);
         } else if (last_at + 5000 < Date.now()) {
             last_at = Date.now();
-            responseTuple.response = 'success_test';    //最後戻す
+            responseTuple.response = 'success';
             console.log('> response=' + JSON.stringify(responseTuple));
-            isOn = true;
             moveServo();
 
         }
@@ -54,7 +52,6 @@ board.on("ready", () => {
     });
 
     moveServo = () => {
-        isOn = false;
         servo.to(270, 800);
         ts.write(responseTuple);
         board.wait(2000, () => {
