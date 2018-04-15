@@ -12,6 +12,8 @@ const board = new five.Board({
 
 let isOn = false;
 let responseTuple;
+let servo;
+let moveServo;
 
 linda.io.on('connect', () => {
     console.log('connect!!!');
@@ -32,6 +34,7 @@ linda.io.on('connect', () => {
             responseTuple.response = 'success_test';    //最後戻す
             console.log('> response=' + JSON.stringify(responseTuple));
             isOn = true;
+            moveServo();
             ts.write(responseTuple);
         }
     });
@@ -41,7 +44,7 @@ linda.io.on('connect', () => {
 
 board.on("ready", () => {
     console.log('bord ok');
-    const servo = new five.Servo({
+    servo = new five.Servo({
         pin: 'GPIO18',
         startAt: 0,
         invert: true,
@@ -49,7 +52,7 @@ board.on("ready", () => {
         pwmRange: [500, 2400]
     });
 
-    const moveServo = () => {
+    moveServo = () => {
         isOn = false;
         servo.to(270, 800);
         board.wait(2000, () => {
@@ -57,11 +60,11 @@ board.on("ready", () => {
         });
     }
 
-    if (isOn){
-        moveServo()
-    }else{
-        console.log('no cmd');
-    }
+    // if (isOn){
+    //     moveServo();
+    // }else{
+    //     console.log('no cmd');
+    // }
 });
 
 
