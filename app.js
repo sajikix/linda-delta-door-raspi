@@ -54,7 +54,6 @@ board.on("ready", () => {
     });
 
     moveServo = () => {
-        //console.log('moved');
         isOn = false;
         servo.to(270, 800);
         ts.write(responseTuple);
