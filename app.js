@@ -32,7 +32,7 @@ linda.io.on('connect', () => {
             ts.write(responseTuple);
         } else if (!('response' in tuple.data)) {
             if (last_at + 7000 < Date.now()) {
-                last_at = wake_at =Date.now();
+                last_at = wake_at = Date.now();
                 isOpen = true;
                 responseTuple.response = 'success_test';
                 console.log('> response=' + JSON.stringify(responseTuple));
@@ -69,8 +69,8 @@ board.on("ready", () => {
 
     const antiSleep = () => {
         console.log('sleep check!')
-        if (!isOpen && Date.now()-wake_at > 100000){
-            servo.to(1,100);
+        if (!isOpen && Date.now() - wake_at > 100000) {
+            servo.to(1, 100);
             board.wait(100, () => {
                 servo.to(0, 100);
                 console.log('wake up!');
@@ -79,6 +79,6 @@ board.on("ready", () => {
         }
     };
 
-    setInterval(antiSleep,10000);
+    setInterval(antiSleep, 20000);
 
 });
