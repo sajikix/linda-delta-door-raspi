@@ -23,7 +23,7 @@ linda.io.on('connect', () => {
     ts.watch({
         where: "delta",
         type: "door",
-        cmd: "test"
+        cmd: "open"
     }, (err, tuple) => {
         console.log("> " + JSON.stringify(tuple.data) + " (from:" + tuple.from + ")");
         responseTuple = tuple.data;
@@ -34,7 +34,7 @@ linda.io.on('connect', () => {
             if (last_at + 7000 < Date.now()) {
                 last_at = wake_at = Date.now();
                 isOpen = true;
-                responseTuple.response = 'success_test';
+                responseTuple.response = 'success';
                 console.log('> response=' + JSON.stringify(responseTuple));
                 ts.write(responseTuple);
                 moveServo();
@@ -68,7 +68,7 @@ board.on("ready", () => {
     };
 
     const antiSleep = () => {
-        console.log('sleep check!')
+        console.log('sleep check!');
         if (!isOpen && Date.now() - wake_at > 100000) {
             servo.to(1, 100);
             board.wait(100, () => {
@@ -80,5 +80,4 @@ board.on("ready", () => {
     };
 
     setInterval(antiSleep, 20000);
-
 });
